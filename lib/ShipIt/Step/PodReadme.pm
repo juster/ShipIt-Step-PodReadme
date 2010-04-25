@@ -125,7 +125,7 @@ the web interface at L<http://rt.cpan.org/NoAuth/ReportBug.html?Queue=ShipIt-Ste
 automatically be notified of progress on your bug as I make changes.
 
 You can also report bugs on github if you have a github account
-at L<http://github.com/juster/perl-shipit-step-podreadme/issues>.
+at L<http://github.com/juster/ShipIt-Step-PodReadme/issues>.
 
 =head1 SUPPORT
 
@@ -145,7 +145,7 @@ L<http://search.cpan.org/dist/Pod-Readme>
 
 =item * Git Repository
 
-L<http://github.com/juster/perl-shipit-step-pod-readme>
+L<http://github.com/juster/ShipIt-Step-PodReadme>
 
 =back
 
