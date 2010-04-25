@@ -7,6 +7,8 @@ use File::Spec  qw();
 use Pod::Readme qw();
 use Carp        qw();
 
+use ShipIt::Util qw(bool_prompt);
+
 our $VERSION = '0.01';
 
 sub new
@@ -17,9 +19,24 @@ sub new
 
 sub run
 {
-    my ($state) = @_;
+    my ($self, $state) = @_;
 
     my $pod_path = _find_pod_file();
+    my $pr_obj   = Pod::Readme->new();
+
+    unless ( $state->dry_run ) {
+        $pr_obj->parse_from_file( $pod_path, 'README' );
+        return;
+    }
+
+    print "*** DRY RUN for PodReadme\n";
+    my $tmp_dir  = File::Spec->tmpdir();
+    my $tmp_path = File::Spec->catfile( $tmp_dir, 'README' );
+
+    $pr_obj->parse_from_file( $pod_path, $tmp_path );
+    print "Wrote new README file to $tmp_path\n";
+
+    return 1;
 }
 
 #---HELPER FUNCTION---
@@ -29,12 +46,13 @@ sub _find_pod_file
     my $modname   = _find_modname();
     my $base_path = $modname;
     $base_path    =~ tr{:}{/}s;
+    $base_path    = "lib/$base_path" if -d 'lib';
 
     my ($pod_path) = ( grep { -e $_ }
                        map { $base_path . $_ }
                        qw/ .pod .pm / );
 
-    Carp::confess "Could not find the main module files for $modname"
+    die "Could not find the main module files for $modname"
         unless $pod_path;
 
     return $pod_path;
@@ -44,10 +62,10 @@ sub _find_pod_file
 sub _find_modname
 {
     foreach ( qw/ Build.PL Makefile.PL / ) {
-        _find_modname_in_file( $_ ) if -f $_;
+        return _find_modname_in_file( $_ ) if -f $_;
     }
 
-    Carp::confess 'Could not find Makefile.PL or Build.PL';
+    die 'Could not find Makefile.PL or Build.PL';
 }
 
 my %REGEXS_FOR =
@@ -57,7 +75,7 @@ my %REGEXS_FOR =
             (?: \s* [(] | \s+ )
             (['"]) (.+?) \1 }xms ],
       'Build.PL'    => 
-      [ qr{ \b name \b .+                 # Module::Build
+      [ qr{ \b module_name \b .+          # Module::Build
             (['"]) (.+?) \1 }xms ] );
 
 #---HELPER FUNCTION---
@@ -80,7 +98,7 @@ sub _find_modname_in_file
     }
 
     close $distfile;
-    Carp::confess "Could not find the module name in $path";
+    die "Could not find the module name in $path";
 }
 
 1; # End of ShipIt::Step::PodReadme
