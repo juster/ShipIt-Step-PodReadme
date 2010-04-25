@@ -107,26 +107,16 @@ __END__
 
 =head1 NAME
 
-ShipIt::Step::PodReadme - The great new ShipIt::Step::PodReadme!
-
-=head1 VERSION
-
-Version 0.01
+ShipIt::Step::PodReadme - Generate a README from POD when using ShipIt
 
 =head1 SYNOPSIS
 
-Quick summary of what the module does.
+Generates your README file from your POD documentation by using
+Pod::Readme.  This is an automated step when you use the ShipIt
+distribution creation tool.  Just add it to the list of steps in your
+C<.shipit> file.
 
-Perhaps a little code snippet.
-
-    use ShipIt::Step::PodReadme;
-
-    my $foo = ShipIt::Step::PodReadme->new();
-    ...
-
-=head1 AUTHOR
-
-Justin Davis, C<< <juster at cpan dot org> >>
+steps = FindVersion, ChangeVersion, B<PodReadme>, DistTest, Commit, Tag, MakeDist, UploadCPAN
 
 =head1 BUGS
 
@@ -134,41 +124,34 @@ Please report any bugs or feature requests to C<bug-shipit-step-podreadme at rt.
 the web interface at L<http://rt.cpan.org/NoAuth/ReportBug.html?Queue=ShipIt-Step-PodReadme>.  I will be notified, and then you'll
 automatically be notified of progress on your bug as I make changes.
 
-
-
+You can also report bugs on github if you have a github account
+at L<http://github.com/juster/perl-shipit-step-podreadme/issues>.
 
 =head1 SUPPORT
 
-You can find documentation for this module with the perldoc command.
+Email me if you need help or have a bug.
 
-    perldoc ShipIt::Step::PodReadme
-
-
-You can also look for information at:
+=head1 SEE ALSO
 
 =over 4
 
-=item * RT: CPAN's request tracker
+=item * ShipIt
 
-L<http://rt.cpan.org/NoAuth/Bugs.html?Dist=ShipIt-Step-PodReadme>
+L<http://search.cpan.org/dist/ShipIt>
 
-=item * AnnoCPAN: Annotated CPAN documentation
+=item * Pod::Readme
 
-L<http://annocpan.org/dist/ShipIt-Step-PodReadme>
+L<http://search.cpan.org/dist/Pod-Readme>
 
-=item * CPAN Ratings
+=item * Git Repository
 
-L<http://cpanratings.perl.org/d/ShipIt-Step-PodReadme>
-
-=item * Search CPAN
-
-L<http://search.cpan.org/dist/ShipIt-Step-PodReadme/>
+L<http://github.com/juster/perl-shipit-step-pod-readme>
 
 =back
 
+=head1 AUTHOR
 
-=head1 ACKNOWLEDGEMENTS
-
+Justin Davis, C<< <juster at cpan dot org> >>
 
 =head1 LICENSE AND COPYRIGHT
 
